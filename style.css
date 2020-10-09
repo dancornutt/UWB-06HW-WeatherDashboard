@@ -1,0 +1,32 @@
+.card {
+    padding: 0;
+}
+
+.card-body {
+    background-color: #057AFC;
+    color: white;
+}
+
+.card-text {
+    font-size: small;
+}
+
+.card-title {
+    font-size: large;
+    font: bold;
+}
+
+header {
+    text-align: center;
+    background-color: black;
+}
+
+h1 {
+    color: white;
+    font-size: xx-large;
+}
+
+.row {
+    width: auto;
+    margin-right: 0%;
+}

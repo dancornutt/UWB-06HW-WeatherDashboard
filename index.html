@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Weather Dashboard</title>
+</head>
+<body class="container">
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main class="row">
+        <aside class="col-3">
+          <h4>Search for a City:</h4>
+          <div class="col">
+            <div class="row">
+              <input type="text" class="form-control" placeholder="City Search"><i class="fas fa-search"></i>
+            </div>
+            
+            
+          </div>
+          <!-- div of cities data tag: cityId-->
+          <ul class="list-group">
+            <li class="list-group-item active">Seattle</li>
+            <li class="list-group-item">Fargo</li>
+            <li class="list-group-item">NYC</li>
+            <li class="list-group-item">LA</li>
+          </ul>
+        </aside>
+        <section class="col-9">
+            <!-- Jumbotron? of CityId -->
+            <div class="jumbotron">
+              <h1 class="display-4">Atlanta (8/15/2019)</h1>
+              <hr class="my-4">
+              <p class="jumboTemp">Temperature: 90.0F</p>
+              <p class="jumboTemp">Humidity: 41%</p>
+              <p class="jumboTemp">Wind Speed: 4.7 MPH</p>
+              <p class="jumboTemp">UV index: <a class="btn btn-primary btn-lg" role="button">9.49</a></p>
+            </div>
+            <H2>5-Day Forecast</H2>
+            <div class="row">
+              <!-- Day Element -->
+              <div class="col mx-1 card" id="day0" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Monday</h5>
+                  <p class="card-text temp">Temp: 86.84 deg F</p>
+                  <p class="card-text humidity">Humidity: 43%</p>
+                </div>  
+              </div>
+              <div class="col mx-1 card" id="day1" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Tuesday</h5>
+                  <p class="card-text temp">Temp: 86.84 deg F</p>
+                  <p class="card-text humidity">Humidity: 43%</p>
+                </div>  
+              </div>
+              <div class="col mx-1 card" id="day2" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Wednesday</h5>
+                  <p class="card-text temp">Temp: 86.84 deg F</p>
+                  <p class="card-text humidity">Humidity: 43%</p>
+                </div>  
+              </div>
+              <div class="col mx-1 card" id="day3" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Thursday</h5>
+                  <p class="card-text temp">Temp: 86.84 deg F</p>
+                  <p class="card-text humidity">Humidity: 43%</p>
+                </div>  
+              </div>
+              <div class="col mx-1 card" id="day4" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Friday</h5>
+                  <p class="card-text temp">Temp: 86.84 deg F</p>
+                  <p class="card-text humidity">Humidity: 43%</p>
+                </div>  
+              </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
