@@ -28,19 +28,21 @@
         <aside class="col-3">
           <h4>Search for a City:</h4>
           <div class="col">
-            <div class="row">
-              <input type="text" class="form-control" placeholder="City Search"><i class="fas fa-search"></i>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control searchCityTxt" aria-label="Amount (to the nearest dollar)">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-primary searchCityBtn"><i class="fas fa-search"></i></button>
+              </div>
             </div>
-            
-            
           </div>
           <!-- div of cities data tag: cityId-->
-          <ul class="list-group">
-            <li class="list-group-item active">Seattle</li>
-            <li class="list-group-item">Fargo</li>
-            <li class="list-group-item">NYC</li>
-            <li class="list-group-item">LA</li>
-          </ul>
+          <div class="list-group">
+            <!-- <button type="button" class="list-group-item list-group-item-action active">
+              Seattle
+            </button>
+            <button type="button" class="list-group-item list-group-item-action">Fargo</button>
+            <button type="button" class="list-group-item list-group-item-action">NYC</button> -->
+          </div>
         </aside>
         <section class="col-9">
             <!-- Jumbotron? of CityId -->
@@ -50,7 +52,7 @@
               <p class="jumboTemp">Temperature: 90.0F</p>
               <p class="jumboTemp">Humidity: 41%</p>
               <p class="jumboTemp">Wind Speed: 4.7 MPH</p>
-              <p class="jumboTemp">UV index: <a class="btn btn-primary btn-lg" role="button">9.49</a></p>
+              <p class="jumboTemp">UV index: <a class="btn btn-primary btn-sm disabled" role="button">9.49</a></p>
             </div>
             <H2>5-Day Forecast</H2>
             <div class="row">
