@@ -2,42 +2,35 @@ const API_KEY = "a67e2faf254fdecaeeaee4a0d9d7e157"
 let activeCityName = "";
 let cities = [];
 
+//converts temperature in Kelvin to Fahrenheit
+function convTemp(K) {
+    return (((K - 273.15) * 9) / 5 + 32).toFixed(0);
+}
+
+//converts m/s to mph
+function convSpeed(s) {
+    return (s * 2.2369362920544).toFixed(1);
+}
+
 //initialize cities from local storage
 function initialize() {
-    console.log("Inside Initialize");
     let savedCities = JSON.parse(localStorage.getItem("WeatherAppCities"));
-    console.log("Saved cities: ", cities);
     if (savedCities && savedCities.length > 0) {
-        console.log(savedCities + "truthy")
         cities = [...savedCities];
         cities.forEach(element => {
             let city = $("<button>")
                 .attr("class", "list-group-item list-group-item-action")
                 .attr("type", "button")
+                .attr("data", element)
                 .text(element.toTitleCase())
             $(".list-group").append(city);
         });
     } else {
         localStorage.setItem("WeatherAppCities", JSON.stringify([]));
     }
-    // if (this.cities.length > 0) {
-    //     this.cities.forEach(element => {
-    //         let city = $("<button>")
-    //             .attr("class", "list-group-item list-group-item-action")
-    //             .attr("type", "button")
-    //             .text(element.toTitleCase())
-    //         $(".list-group").append(city);
-    //     });
-    // } 
-    console.log("Exiting Initialize, cities: ", cities);
 }
 
-//Event handler on search query On click:
-    //Clean data, convert to lowercase, see if city is in list already if not:
-        // getcity(city)
-            //if response is successful
-                //Update other data
-            //else alter user city not found, exit
+//event handler on search button query on click:
 $(".searchCityBtn").on("click", function(event) {
     event.preventDefault();
     let wantedCity = $(".searchCityTxt").val();
@@ -46,29 +39,28 @@ $(".searchCityBtn").on("click", function(event) {
         console.log("cities", cities)
         if (!cities || !cities.includes(wantedCity)) {
             cities.push(wantedCity);
-            localStorage.setItem("WeatherAppCities", JSON.stringify(cities))
+            localStorage.setItem("WeatherAppCities", JSON.stringify(cities));
         };
         getcity(wantedCity);
     }
 })
             
-//Event handler on list group on click:
-    //get event.target.data. updateUI()
+//event handler on list group on click
+$(".list-group").on("click", function(event) {
+    event.preventDefault();
+    let requestedCity = $(event.target).attr("data");
+    getcity(requestedCity);
+})
 
 function getcity(city) {
     //request city data from open weather endpoints
     console.log("Getting data for: ", city);
-        update5DayData(city);
+        // update5DayData(city);
         updateCityDayData(city);
-        updateUVIndexData(city);
-
-        //on response add city to list-group
-        //update UI()
-        //saveTLocalStorage()
 }
 
 function update5DayData(city) {
-
+    //TODO
 }
 
 function updateCityDayData(city) {
@@ -78,12 +70,41 @@ function updateCityDayData(city) {
         method: "GET"
     }).then(
         function(res) {
-            console.log(res);
+            // console.log(res);
+            updateDayWeatherUI(res);
+            updateUVIndex(res.coord.lat, res.coord.lon);
         }
     )
 }
 
-function updateUVIndexData(city) {
+function updateUVIndex(lat, lon) {
+    $.ajax({
+        url: `http://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
+        method: "GET"
+    }).then(
+        function(res) {
+            let btnClass = "";
+            if (parseFloat(res.value) <= 2) {
+                btnClass = "btn-success";
+            } else if (parseFloat(res.value) <= 5) {
+                btnClass = "btn-warning";
+            } else {
+                btnClass = "btn-danger";
+            }
+            $(".uvButton")
+                    .html(res.value)
+                    .removeClass("btn-success btn-warning btn-danger")
+                    .addClass(btnClass)
+        }
+    )
+}
+
+function updateDayWeatherUI(res) {
+    $("div.jumbotron > h1.display-4").html(res.name);
+    $("div.jumbotron > p.jumboT").html(`Temperature: ${convTemp(res.main.temp)}${'&#8457'}`);
+    $("div.jumbotron > p.jumboH").html(`Humidity: ${res.main.humidity.toFixed(0)}%`);
+    $("div.jumbotron > p.jumboW").html(`Wind Speed: ${convSpeed(parseFloat(res.wind.speed))} MPH`);
+    //update5Day()l
 
 }
 
