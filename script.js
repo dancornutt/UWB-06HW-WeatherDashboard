@@ -55,22 +55,30 @@ $(".list-group").on("click", function(event) {
 function getcity(city) {
     //request city data from open weather endpoints
     console.log("Getting data for: ", city);
+    //TODO check if openWeather has city data
         // update5DayData(city);
         updateCityDayData(city);
 }
 
-function update5DayData(city) {
-    //TODO
+function update5Day(city) {
+    $.ajax({
+        url: `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}`,
+        method: "GET"
+    }).then(
+        function(res) {
+            console.log("5 day weather is: ", res);
+        }
+    )
 }
 
 function updateCityDayData(city) {
-    console.log("Made it here")
+    update5Day(city);
     $.ajax({
         url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`,
         method: "GET"
     }).then(
         function(res) {
-            // console.log(res);
+
             updateDayWeatherUI(res);
             updateUVIndex(res.coord.lat, res.coord.lon);
         }
@@ -100,7 +108,8 @@ function updateUVIndex(lat, lon) {
 }
 
 function updateDayWeatherUI(res) {
-    $("div.jumbotron > h1.display-4").html(res.name);
+    $("div.jumbotron > div.row > h1.display-4").html(res.name);
+    $('#wicon').attr('src', `http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
     $("div.jumbotron > p.jumboT").html(`Temperature: ${convTemp(res.main.temp)}${'&#8457'}`);
     $("div.jumbotron > p.jumboH").html(`Humidity: ${res.main.humidity.toFixed(0)}%`);
     $("div.jumbotron > p.jumboW").html(`Wind Speed: ${convSpeed(parseFloat(res.wind.speed))} MPH`);
