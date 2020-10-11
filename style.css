@@ -16,6 +16,11 @@
     font: bold;
 }
 
+h4.display-6 {
+    font: bold;
+    color:rgb(124, 124, 124);
+}
+
 header {
     text-align: center;
     background-color: black;

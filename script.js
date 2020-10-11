@@ -54,7 +54,7 @@ function update5Day(lat, lon) {
                 $(`#day${index} > div.card-body > h5.card-title`)
                     .html(`${moment().add(1 + index, 'days').format("dddd")}`);
                 $(`#day${index} > div.card-body > p.temp`)
-                    .html(`Temperature: ${value.temp.day.toFixed(1)}&#8457`);
+                    .html(`Temp: ${value.temp.day.toFixed(1)}&#8457`);
                 $(`#day${index} > div.card-body > p.humidity`)
                     .html(`Humidity: ${value.humidity}%`);                
             });
@@ -108,7 +108,8 @@ function updateUVIndex(lat, lon) {
 
 //Updates main display for selected city or last selected city
 function updateDayWeatherUI(res) {
-    $("div.jumbotron > div.row > h1.display-4").html(`${res.name} ${moment().format('(MM/DD/YY)')}`);
+    $("div.jumbotron > div.row > h1.display-4").html(`${res.name}`);
+    $("div.jumbotron > h4.display-6").html(`${moment().format('dddd (MM/DD/YY)')}`);
     $('#wicon').attr('src', `http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
     $("div.jumbotron > p.jumboT").html(`Temperature: ${res.main.temp.toFixed(1)}&#8457`);
     $("div.jumbotron > p.jumboH").html(`Humidity: ${res.main.humidity.toFixed(0)}%`);
