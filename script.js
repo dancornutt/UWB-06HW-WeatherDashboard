@@ -1,16 +1,20 @@
+//TODOs:
+    //Error handle cities not found
+    //Hit API with imperial units
+
 const API_KEY = "a67e2faf254fdecaeeaee4a0d9d7e157"
 let activeCityName = "";
 let cities = [];
 
-//converts temperature in Kelvin to Fahrenheit
-function convTemp(K) {
-    return (((K - 273.15) * 9) / 5 + 32).toFixed(0);
-}
+// //converts temperature in Kelvin to Fahrenheit
+// function convTemp(K) {
+//     return (((K - 273.15) * 9) / 5 + 32).toFixed(0);
+// }
 
-//converts m/s to mph
-function convSpeed(s) {
-    return (s * 2.2369362920544).toFixed(1);
-}
+// //converts m/s to mph
+// function convSpeed(s) {
+//     return (s * 2.2369362920544).toFixed(1);
+// }
 
 //initialize cities from local storage
 function initialize() {
@@ -56,31 +60,40 @@ function getcity(city) {
     //request city data from open weather endpoints
     console.log("Getting data for: ", city);
     //TODO check if openWeather has city data
-        // update5DayData(city);
+        // update5Day(city);
         updateCityDayData(city);
 }
 
-function update5Day(city) {
+function update5Day(lat, lon) {
     $.ajax({
-        url: `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}`,
+        url: `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&units=imperial&appid=${API_KEY}`,
         method: "GET"
     }).then(
         function(res) {
-            console.log("5 day weather is: ", res);
+            let days = res.daily.slice(0,5);
+            $.each(days, function(index, value) {
+                // updateUI Day
+                $(`#day${index} > div.card-body > h5.card-title`)
+                    .html(`${moment().add(1 + index, 'days').format("dddd")}`);
+                $(`#day${index} > div.card-body > p.temp`)
+                    .html(`Temperature: ${value.temp.day.toFixed(1)}&#8457`);
+                $(`#day${index} > div.card-body > p.humidity`)
+                    .html(`Humidity: ${value.humidity}%`);                
+            });
+            console.log("7 day weather is: ", days);
         }
     )
 }
 
 function updateCityDayData(city) {
-    update5Day(city);
     $.ajax({
-        url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`,
+        url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${API_KEY}`,
         method: "GET"
     }).then(
         function(res) {
-
             updateDayWeatherUI(res);
             updateUVIndex(res.coord.lat, res.coord.lon);
+            update5Day(res.coord.lat, res.coord.lon);
         }
     )
 }
@@ -110,11 +123,9 @@ function updateUVIndex(lat, lon) {
 function updateDayWeatherUI(res) {
     $("div.jumbotron > div.row > h1.display-4").html(res.name);
     $('#wicon').attr('src', `http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
-    $("div.jumbotron > p.jumboT").html(`Temperature: ${convTemp(res.main.temp)}${'&#8457'}`);
+    $("div.jumbotron > p.jumboT").html(`Temperature: ${res.main.temp.toFixed(1)}&#8457`);
     $("div.jumbotron > p.jumboH").html(`Humidity: ${res.main.humidity.toFixed(0)}%`);
-    $("div.jumbotron > p.jumboW").html(`Wind Speed: ${convSpeed(parseFloat(res.wind.speed))} MPH`);
-    //update5Day()l
-
+    $("div.jumbotron > p.jumboW").html(`Wind Speed: ${res.wind.speed.toFixed(0)} MPH`);
 }
 
 //Plucked from stack overflow
