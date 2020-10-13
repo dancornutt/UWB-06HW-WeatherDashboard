@@ -65,7 +65,7 @@ function update5Day(lat, lon) {
 //Main function for updating weather from API, calls lower functions if city weather request response is valid.
 function updateCity(city) {
     $.ajax({
-        url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${API_KEY}`,
+        url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${API_KEY}`,
         method: "GET"
     }).then(function(res) {
         //Success
@@ -86,7 +86,7 @@ function updateCity(city) {
 
 function updateUVIndex(lat, lon) {
     $.ajax({
-        url: `http://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
+        url: `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
         method: "GET"
     }).then(
         function(res) {
