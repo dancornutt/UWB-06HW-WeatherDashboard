@@ -110,7 +110,7 @@ function updateUVIndex(lat, lon) {
 function updateDayWeatherUI(res) {
     $("div.jumbotron > div.row > h1.display-4").html(`${res.name}`);
     $("div.jumbotron > h4.display-6").html(`${moment().format('dddd (MM/DD/YY)')}`);
-    $('#wicon').attr('src', `http://openweathermap.org/img/w/${res.weather[0].icon}.png`);
+    $('#wicon').attr('src', `https://openweathermap.org/img/w/${res.weather[0].icon}.png`);
     $("div.jumbotron > p.jumboT").html(`Temperature: ${res.main.temp.toFixed(1)}&#8457`);
     $("div.jumbotron > p.jumboH").html(`Humidity: ${res.main.humidity.toFixed(0)}%`);
     $("div.jumbotron > p.jumboW").html(`Wind Speed: ${res.wind.speed.toFixed(0)} MPH`);
