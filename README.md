@@ -2,6 +2,8 @@
 
 This project is centered on creating a site to help users know the weather in places they are interested. Weather data includes today's data as well as the forecast for the next 5 days from today. When you search a city it is added to your search history and can be easily selected in the future. If a city is not known, the user is alerted that their requested city is not found.
 
+![Weather App](./images/WeatherApp.png)
+
 ## Getting Started
 
 Luckily this is a static site so there isn't much set-up to do. knowledge of javascript would be helpful if you would like to add more functionality to the weather app.
